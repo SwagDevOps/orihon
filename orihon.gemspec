@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency("htmlbeautifier", ["~> 1.4"])
   s.add_runtime_dependency("inifile", ["~> 3.0"])
+  s.add_runtime_dependency("liquid", ["~> 5.4"])
   s.add_runtime_dependency("rake", ["~> 13.0"])
   s.add_runtime_dependency("sassc", ["~> 2.4"])
   s.add_runtime_dependency("vendorer", ["~> 0.2"])
