@@ -60,16 +60,14 @@ class Orihon::Actions::NotebookPrepareTemplate < Orihon::Actions::BaseTemplateAc
 
   # @return [Hash{Regexp => String}]
   def replacements
-    config.fetch(:template_replacements).to_h.transform_keys { %r[#{_1}] }
+    config.fetch(:template_replacements, {}).to_h.transform_keys { %r[#{_1}] }
   end
 
   # @return [Hash{Symbol => Struct}]
   def variables
     {
-      config: config.to_h,
       info: info.call,
-    }.transform_values do |value|
-      structurizer.call(value)
-    end
+    }.transform_values { structurizer.call(_1) }
+     .then { config.fetch(:template_variables, {}).to_h.transform_keys(&:to_sym).merge(_1) }
   end
 end

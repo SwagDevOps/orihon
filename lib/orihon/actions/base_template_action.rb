@@ -6,6 +6,16 @@ require_relative '../actions'
 class Orihon::Actions::BaseTemplateAction < Orihon::Actions::BaseAction
   protected
 
+  # Config for template used by ``zim`` command.
+  #
+  # @api private
+  TEMPLATE_CONFIG_KEY = :template_file
+
+  # Path joined to ``tmp_dir`` for compiled template (as a basepath).
+  #
+  # @api private
+  TEMPLATE_TMP_PATH = 'zim/template'
+
   # @return [Pathname]
   def tmp_dir
     config.path(:tmp_dir)
@@ -13,12 +23,12 @@ class Orihon::Actions::BaseTemplateAction < Orihon::Actions::BaseAction
 
   # @return [String]
   def template_name
-    config.path(:zim_template).dirname.basename.to_s
+    config.path(TEMPLATE_CONFIG_KEY).dirname.basename.to_s
   end
 
   # @return [String]
   def template_filename
-    config.path(:zim_template).basename.to_s
+    config.path(TEMPLATE_CONFIG_KEY).basename.to_s
   end
 
   def template_dir
@@ -32,7 +42,7 @@ class Orihon::Actions::BaseTemplateAction < Orihon::Actions::BaseAction
   # @return [Array<Pathname>]
   def template_dirs
     [
-      config.path(:zim_template),
+      config.path(TEMPLATE_CONFIG_KEY),
       template.dirname
     ]
   end
@@ -41,6 +51,6 @@ class Orihon::Actions::BaseTemplateAction < Orihon::Actions::BaseAction
   #
   # @return [Pathname]
   def template
-    tmp_dir.join('zim/template').join(template_name).join(template_filename)
+    tmp_dir.join(TEMPLATE_TMP_PATH).join(template_name).join(template_filename)
   end
 end
