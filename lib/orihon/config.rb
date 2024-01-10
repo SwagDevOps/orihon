@@ -10,17 +10,16 @@ class Orihon::Config
     Pathname.new(file).realpath.read.then do |content|
       @config = YAML.safe_load(content).then do |v|
         self.class.__send__(:defaults).merge(v)
-      end.then do |v|
-        Pathname.new(v.fetch('zim_src_dir')).join('notebook.zim').realpath.then do |fp|
-          v.merge({ 'info' => ::Orihon::Info.new(fp).to_h })
-        end
       end
     end
   end
 
   # @return [Hash{Symbol => Object}]
   def to_h
-    self.config.dup.transform_values(&:dup).transform_keys(&:to_sym)
+    (self.config || {})
+      .dup
+      .transform_values(&:dup)
+      .transform_keys(&:to_sym)
   end
 
   def fetch(...)

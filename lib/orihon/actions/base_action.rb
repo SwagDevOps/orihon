@@ -3,14 +3,9 @@
 require_relative '../actions'
 
 # @abstract
-class Orihon::Actions::BaseAction
+class Orihon::Actions::BaseAction < Orihon::Configurable
   autoload(:FileUtils, 'fileutils')
   autoload(:Shellwords, 'shellwords')
-
-  # @param [Orihon::Config]
-  def initialize(config: nil)
-    @config = config || ORIHON_CONFIG
-  end
 
   # Execute the action
   def call
@@ -23,9 +18,6 @@ class Orihon::Actions::BaseAction
   end
 
   protected
-
-  # @return [Orihon::Config]
-  attr_reader :config
 
   # @return [Boolean]
   def debug?

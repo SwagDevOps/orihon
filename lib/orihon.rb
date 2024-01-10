@@ -9,7 +9,8 @@ class Orihon
     {
       Actions: :actions,
       Config: :config,
-      Info: :info,
+      Configurable: :configurable,
+      Services: :services,
     }.each { autoload(_1, "#{path}/#{_2}") }
   end
 
@@ -35,6 +36,11 @@ class Orihon
       (file || Pathname.pwd.join('orihon.yml'))
         .to_s
         .then { |fp| Config.new(fp) }
+    end
+
+    # @return [Hash{Symbol => Class}]
+    def services
+      Services.all
     end
 
     protected

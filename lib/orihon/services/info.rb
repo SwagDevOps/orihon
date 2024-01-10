@@ -1,28 +1,23 @@
 # frozen_string_literal: true
 
-require_relative '../orihon'
+require_relative '../services'
 
-class Orihon::Info
+# Read ``notebook`` file as a ``Hash``.
+class Orihon::Services::Info < Orihon::Services::BaseService
   autoload(:IniFile, 'inifile')
   autoload(:Pathname, 'pathname')
 
-  def initialize(file)
-    @info = self.read(file)
-  end
-
   # @return [Hash{Symbol => String}]
-  def to_h
-    self.info.to_h.dup
-  end
-
-  def fetch(...)
-    self.to_h.fetch(...).dup.freeze
+  def call
+    read(filepath)
   end
 
   protected
 
-  # @return [Hash{Symbol => String}]
-  attr_reader :info
+  # @return [Pathname]
+  def filepath
+    src_dir.join('notebook.zim')
+  end
 
   # @param file [String, Pathname]
   #
@@ -33,5 +28,13 @@ class Orihon::Info
     end.then do |notebook|
       notebook.transform_keys(&:to_sym)
     end.freeze
+  end
+
+  # @return [Pathname]
+  def src_dir
+    config.fetch(:zim_src_dir)
+          .to_s
+          .then { Pathname.new(_1) }
+          .expand_path
   end
 end

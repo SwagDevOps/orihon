@@ -30,7 +30,12 @@ Gem::Specification.new do |s|
     "lib/orihon/bootstrap/tasks/vendorer.rb",
     "lib/orihon/bootstrap/tasks/zim.rb",
     "lib/orihon/config.rb",
-    "lib/orihon/info.rb",
+    "lib/orihon/configurable.rb",
+    "lib/orihon/services.rb",
+    "lib/orihon/services/base_service.rb",
+    "lib/orihon/services/info.rb",
+    "lib/orihon/services/structurizer.rb",
+    "lib/orihon/services/template.rb",
     "lib/orihon/version.rb",
     "lib/orihon/version.yml",
   ]
