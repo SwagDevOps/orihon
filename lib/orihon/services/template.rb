@@ -9,7 +9,7 @@ class Orihon::Services::Template < Orihon::Services::BaseService
   # @param variables [Hash{Symbol => Object}]
   #
   # @return [String]
-  def call(source, variables)
+  def call(source, variables = {})
     engine.parse(source, error_mode: :strict).then do |template|
       template.render!(variables.transform_keys(&:to_s), render_config).tap do
         warn(template.errors) unless template.errors.empty?
