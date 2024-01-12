@@ -38,7 +38,7 @@ class Orihon
         .then { |fp| Config.new(fp) }
     end
 
-    # @return [Hash{Symbol => Class}]
+    # @return [Hash{Symbol => Class<Orihon::Services::BaseService>}]
     def services
       Services.all
     end
