@@ -6,6 +6,7 @@ module Orihon::Services
   File.realpath(__FILE__).gsub(/\.rb/, '').then do |path|
     {
       BaseService: :base_service,
+      DefaultsProvider: :defaults_provider,
       Info: :info,
       Structurizer: :structurizer,
       Template: :template,
