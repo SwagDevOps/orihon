@@ -7,28 +7,20 @@ class Orihon::Configurable
   # @param [Orihon::Config]
   def initialize(config: nil)
     @config = config || lambda do
-      Object.const_get(:ORIHON_CONFIG)
-    rescue StandardError => e
-      missing_config(error: e)
+      :ORIHON_CONFIG.then do |c|
+        Object.constants.include?(c) ? Object.const_get(c) : nil
+      end
     end.call
   end
 
   protected
 
-  # @return [Orihon::Config]
-  attr_reader :config
-
-  # @param error [Exception]
+  # Config SHOULD be used on runtime (``call`` method).
   #
   # @return [Orihon::Config]
-  def missing_config(error: nil)
-    if error.is_a?(::Exception)
-      [
-        "#{error.class.name}: #{error.message}",
-        "#{error.backtrace_locations[0]}"
-      ].join("\n").strip.tap { warn(_1) }
-    end
+  def config
+    return @config unless @config.nil?
 
-    ::Orihon::Config.allocate
+    raise ::RuntimeError, 'Missing config'
   end
 end
