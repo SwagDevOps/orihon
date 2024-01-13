@@ -6,24 +6,22 @@ class Orihon::Config
   autoload(:Pathname, 'pathname')
   autoload(:YAML, 'yaml')
 
-  def initialize(file)
+  def initialize(file, defaults_provider: nil)
+    # @type [Orihon::Services::DefaultsProvider, Class<Orihon::Services::DefaultsProvider>]
+    defaults_provider ||= ::Orihon.services.fetch(:defaults_provider)
+
     Pathname.new(file).realpath.read.then do |content|
-      @config = YAML.safe_load(content).then do |v|
-        self.class.__send__(:defaults).merge(v)
-      end
+      @config = yaml(content, defaults: defaults_provider.call.to_h)
     end
   end
 
   # @return [Hash{Symbol => Object}]
   def to_h
-    (self.config || {})
-      .dup
-      .transform_values(&:dup)
-      .transform_keys(&:to_sym)
+    self.config.dup.transform_values(&:dup)
   end
 
   def fetch(...)
-    self.to_h.fetch(...).dup.freeze
+    self.to_h.fetch(...)
   end
 
   # @param key [String, Symbol]
@@ -37,28 +35,19 @@ class Orihon::Config
 
   protected
 
-  # @return [Hash{String => Object}]
+  # @return [Hash{Symbol => Object}]
   attr_reader :config
 
-  class << self
-    protected
-
-    # @return [Hash{String => Object}]
-    def defaults
-      {
-        tasks_debug: false,
-        html_lang: ::ENV['LANG']&.split('_')[0],
-        zim_src_dir: 'notebook',
-        zim_export_dir: 'export',
-        tmp_dir: 'tmp',
-        # add custom styles ---------------------------------------------------
-        scss_process: true,
-        scss_dir: 'resources/scss',
-        scss_source_map_embed: true,
-        scss_render_style: :expanded,
-        # replacements --------------------------------------------------------
-        template_beautify: true,
-      }.transform_keys(&:to_s).compact
-    end
+  # @param content [String]
+  # @param defaults [Hash{String => Object}]
+  #
+  # @return [Hash{Symbol => Object}]
+  def yaml(content, defaults: {})
+    YAML.safe_load(content, aliases: true)
+        .to_h
+        .transform_keys(&:to_s)
+        .then { defaults.transform_keys(&:to_s).merge(_1) }
+        .to_h
+        .transform_keys(&:to_sym)
   end
 end
