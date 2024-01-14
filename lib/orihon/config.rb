@@ -9,9 +9,11 @@ class Orihon::Config
   def initialize(file, defaults_provider: nil)
     # @type [Orihon::Services::DefaultsProvider, Class<Orihon::Services::DefaultsProvider>]
     defaults_provider ||= ::Orihon.services.fetch(:defaults_provider)
+    # @type [Hash{Symbol => Object}]
+    defaults = defaults_provider.call
 
     Pathname.new(file).realpath.read.then do |content|
-      @config = yaml(content, defaults: defaults_provider.call.to_h)
+      @config = yaml(content, defaults: defaults)
     end
   end
 
@@ -39,15 +41,13 @@ class Orihon::Config
   attr_reader :config
 
   # @param content [String]
-  # @param defaults [Hash{String => Object}]
+  # @param defaults [Hash{Symbol => Object}]
   #
   # @return [Hash{Symbol => Object}]
   def yaml(content, defaults: {})
     YAML.safe_load(content, aliases: true)
         .to_h
-        .transform_keys(&:to_s)
-        .then { defaults.transform_keys(&:to_s).merge(_1) }
-        .to_h
         .transform_keys(&:to_sym)
+        .then { defaults.merge(_1) }
   end
 end

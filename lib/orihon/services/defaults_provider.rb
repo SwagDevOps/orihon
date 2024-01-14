@@ -4,15 +4,8 @@ require_relative '../services'
 
 # Provides defaults config values.
 class Orihon::Services::DefaultsProvider < Orihon::Services::BaseService
-  # @return [Hash{String => Object}]
+  # @return [Hash{Symbol => Object}]
   def call
-    defaults.transform_keys(&:to_s).compact
-  end
-
-  protected
-
-  # @return [Hash]
-  def defaults
     {
       tasks_debug: false,
       zim_src_dir: 'notebook',
