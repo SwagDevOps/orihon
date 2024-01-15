@@ -8,6 +8,7 @@ class Orihon
 
     {
       Actions: :actions,
+      Concerns: :concerns,
       Config: :config,
       Configurable: :configurable,
       Services: :services,
