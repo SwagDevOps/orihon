@@ -29,13 +29,20 @@ Gem::Specification.new do |s|
     "lib/orihon/bootstrap/tasks.rb",
     "lib/orihon/bootstrap/tasks/vendorer.rb",
     "lib/orihon/bootstrap/tasks/zim.rb",
+    "lib/orihon/concerns.rb",
+    "lib/orihon/concerns/registry.rb",
     "lib/orihon/config.rb",
     "lib/orihon/configurable.rb",
     "lib/orihon/services.rb",
     "lib/orihon/services/base_service.rb",
+    "lib/orihon/services/defaults_provider.rb",
     "lib/orihon/services/info.rb",
     "lib/orihon/services/structurizer.rb",
     "lib/orihon/services/template.rb",
+    "lib/orihon/templates.rb",
+    "lib/orihon/templates/base_dialect.rb",
+    "lib/orihon/templates/dummy.rb",
+    "lib/orihon/templates/html.rb",
     "lib/orihon/version.rb",
     "lib/orihon/version.yml",
   ]
@@ -46,6 +53,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("rake", ["~> 13.0"])
   s.add_runtime_dependency("sassc", ["~> 2.4"])
   s.add_runtime_dependency("vendorer", ["~> 0.2"])
+  s.add_runtime_dependency("wlang", ["~> 3.0"])
 end
 
 # Local Variables:
