@@ -12,6 +12,7 @@ class Orihon
       Config: :config,
       Configurable: :configurable,
       Services: :services,
+      Templates: :templates,
     }.each { autoload(_1, "#{path}/#{_2}") }
   end
 

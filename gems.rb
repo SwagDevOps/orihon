@@ -21,6 +21,7 @@ group :default do
   gem 'rake', '~> 13.0'
   gem 'sassc', '~> 2.4'
   gem 'vendorer', '~> 0.2'
+  gem 'wlang', '~> 3.0'
 end
 
 group :development do

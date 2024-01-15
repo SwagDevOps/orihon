@@ -9,26 +9,21 @@ class Orihon::Services::Template < Orihon::Services::BaseService
   # @param variables [Hash{Symbol => Object}]
   #
   # @return [String]
-  def call(source, variables = {})
-    engine.parse(source, error_mode: :strict).then do |template|
-      template.render!(variables.transform_keys(&:to_s), render_config).tap do
-        warn(template.errors) unless template.errors.empty?
-      end
-    end
+  def call(source, variables = {}, dialect: :html)
+    engine_for(dialect).render(source, variables || {})
   end
 
   protected
 
-  # @return [Class<Liquid::Template>]
-  def engine
-    require('liquid').then { Liquid::Template }
+  # @see https://github.com/enspirit/wlang
+  #
+  # @return [Class<Wlang::Dialect>]
+  def engine_for(dialect)
+    engines.fetch(dialect.to_sym)
   end
 
-  # @return [Hash{Symbol => Boolean}]
-  def render_config
-    {
-      strict_variables: true,
-      strict_filters: true,
-    }
+  # @return [Hash{Symbol => Class<Wlang::Dialect>}]
+  def engines
+    ::Orihon::Templates.all
   end
 end
