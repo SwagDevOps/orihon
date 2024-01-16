@@ -3,6 +3,10 @@
 require_relative '../orihon'
 
 module Orihon::Actions
+  class << self
+    include(::Orihon::Concerns::Registry)
+  end
+
   File.realpath(__FILE__).gsub(/\.rb/, '').then do |path|
     {
       BaseAction: :base_action,
@@ -12,6 +16,10 @@ module Orihon::Actions
       NotebookExport: :notebook_export,
       NotebookPrepareStyle: :notebook_prepare_style,
       NotebookPrepareTemplate: :notebook_prepare_template,
-    }.each { autoload(_1, "#{path}/#{_2}") }
+    }.then { register(_1, path: path) }.then do |h|
+      self.define_singleton_method(:all) do
+        h.map { [_1, self.const_get(_2)] }.to_h
+      end
+    end
   end
 end

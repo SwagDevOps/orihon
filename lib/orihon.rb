@@ -45,6 +45,11 @@ class Orihon
       Services.all
     end
 
+    # @return [Hash{Symbol => Class<Orihon::Actions::BaseAction>}]
+    def actions
+      Actions.all
+    end
+
     protected
 
     # @return [Pathname]
