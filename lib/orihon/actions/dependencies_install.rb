@@ -12,12 +12,14 @@ class Orihon::Actions::DependenciesInstall < Orihon::Actions::BaseAction
 
   # @return [Orihon::Services::Vendorer]
   def vendorer
-    # noinspection RubyMismatchedReturnType
-    ::Orihon.services.fetch(:vendorer).tap do |service|
-      if service.is_a?(Class)
-        # @type [Class<Orihon::Configurable>]
-        service.new(config: config)
+    ::Orihon.services.fetch(:vendorer).then do |service|
+      service.new(config: config) if service.is_a?(Class)
+
+      unless service.is_a?(Orihon::Services::Vendorer)
+        raise "Incompatible type (got: #{service.class})"
       end
+
+      service
     end
   end
 end
