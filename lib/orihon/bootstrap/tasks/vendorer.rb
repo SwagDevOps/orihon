@@ -16,4 +16,10 @@ Pathname.new(__FILE__).basename('.*').to_s.tap do |name|
   task "#{name}:install" do
     vendorer.call(update: false)
   end
+
+  desc 'Install files from Vendorfile'
+  task "#{name}:test" do
+    # vendorer.call(update: false)
+    Orihon.services.fetch(:vendorer).call
+  end
 end
