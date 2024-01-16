@@ -7,6 +7,7 @@ module Orihon::Actions
     {
       BaseAction: :base_action,
       BaseTemplateAction: :base_template_action,
+      DependenciesInstall: :dependencies_install,
       NotebookOpen: :notebook_open,
       NotebookExport: :notebook_export,
       NotebookPrepareStyle: :notebook_prepare_style,
