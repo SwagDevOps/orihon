@@ -2,6 +2,8 @@
 
 require_relative '../templates'
 
+# @abstract
+#
 # @see https://github.com/enspirit/wlang/blob/master/lib/wlang/dialect.rb
 # @see https://github.com/enspirit/wlang/blob/master/lib/wlang/dummy.rb
 # @see https://github.com/enspirit/wlang/blob/master/lib/wlang/html.rb
