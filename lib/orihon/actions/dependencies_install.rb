@@ -15,11 +15,21 @@ class Orihon::Actions::DependenciesInstall < Orihon::Actions::BaseAction
     ::Orihon.services.fetch(:vendorer).then do |service|
       service.new(config: config) if service.is_a?(Class)
 
-      unless service.is_a?(Orihon::Services::Vendorer)
+      unless check?(service, ::Orihon::Services::Vendorer)
         raise "Incompatible type (got: #{service.class})"
       end
 
       service
     end
+  end
+
+  # Check given service against given type.
+  #
+  # @param service [Object, Class]
+  # @param type [Class]
+  #
+  # @return [Boolean]
+  def check?(service, type)
+    [service.is_a?(type), service == type].include?(true)
   end
 end
