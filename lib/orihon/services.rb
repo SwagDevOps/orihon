@@ -13,6 +13,7 @@ module Orihon::Services
       DefaultsProvider: :defaults_provider,
       Info: :info,
       Structurizer: :structurizer,
+      Tasker: :tasker,
       Template: :template,
       Vendorer: :vendorer,
     }.then { register(_1, path: path) }.then do |h|
