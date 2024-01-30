@@ -7,8 +7,8 @@ class Orihon::Config
   autoload(:YAML, 'yaml')
 
   def initialize(file, defaults_provider: nil)
-    # @type [Orihon::Services::DefaultsProvider, Class<Orihon::Services::DefaultsProvider>]
-    defaults_provider ||= ::Orihon.services.fetch(:defaults_provider)
+    # @type [Orihon::Services::DefaultsProvider]
+    defaults_provider ||= services.fetch(:defaults_provider).new
     # @type [Hash{Symbol => Object}]
     defaults = defaults_provider.call
 
@@ -39,6 +39,11 @@ class Orihon::Config
 
   # @return [Hash{Symbol => Object}]
   attr_reader :config
+
+  # @return [Hash{Symbol => Class<Orihon::Services::BaseService>}]
+  def services
+    ::Orihon::Services.all
+  end
 
   # @param content [String]
   # @param defaults [Hash{Symbol => Object}]

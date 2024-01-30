@@ -4,13 +4,11 @@ require_relative '../orihon'
 
 # @abstract
 class Orihon::Configurable
+  include(::Orihon::Concerns::ConfigAware)
+
   # @param [Orihon::Config]
   def initialize(config: nil)
-    @config = config || lambda do
-      :ORIHON_CONFIG.then do |c|
-        Object.constants.include?(c) ? Object.const_get(c) : nil
-      end
-    end.call
+    @config = config
   end
 
   protected
@@ -19,8 +17,8 @@ class Orihon::Configurable
   #
   # @return [Orihon::Config]
   def config
-    return @config unless @config.nil?
-
-    raise ::RuntimeError, 'Missing config'
+    (@config || super).tap do |config|
+      raise ::RuntimeError, 'Missing config' unless config
+    end
   end
 end

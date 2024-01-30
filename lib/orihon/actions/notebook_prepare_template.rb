@@ -4,11 +4,12 @@ require_relative '../actions'
 
 class Orihon::Actions::NotebookPrepareTemplate < Orihon::Actions::BaseTemplateAction
   autoload(:HtmlBeautifier, 'htmlbeautifier')
+  include(::Orihon::Concerns::ServicesAware)
 
   def initialize(config: nil, structurizer: nil, templater: nil, info: nil)
     super(config: config)
 
-    ::Orihon.services.tap do |services|
+    services.tap do |services|
       @structurizer = structurizer || services.fetch(:structurizer)
       @templater = templater || services.fetch(:template)
       @info = info || services.fetch(:info)

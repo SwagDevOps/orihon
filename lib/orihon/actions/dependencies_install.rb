@@ -4,6 +4,8 @@ require_relative '../actions'
 
 # Install dependencies
 class Orihon::Actions::DependenciesInstall < Orihon::Actions::BaseAction
+  include(::Orihon::Concerns::ServicesAware)
+
   def call
     vendorer.call(update: false)
   end
@@ -12,7 +14,7 @@ class Orihon::Actions::DependenciesInstall < Orihon::Actions::BaseAction
 
   # @return [Orihon::Services::Vendorer]
   def vendorer
-    ::Orihon.services.fetch(:vendorer).then do |service|
+    services.fetch(:vendorer).then do |service|
       service.new(config: config) if service.is_a?(Class)
 
       unless check?(service, ::Orihon::Services::Vendorer)
