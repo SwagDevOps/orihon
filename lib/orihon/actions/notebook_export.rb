@@ -26,6 +26,6 @@ class Orihon::Actions::NotebookExport < Orihon::Actions::BaseTemplateAction
 
   # @return [Pathname]
   def src_dir
-    config.path(:zim_src_dir)
+    config.path(:notebook_dir)
   end
 end

@@ -11,6 +11,6 @@ class Orihon::Actions::NotebookOpen < Orihon::Actions::BaseAction
 
   # @return [Pathname]
   def filepath
-    config.path(:zim_src_dir).join('notebook.zim')
+    config.path(:notebook_dir).join('notebook.zim')
   end
 end

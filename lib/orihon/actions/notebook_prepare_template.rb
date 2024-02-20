@@ -56,7 +56,7 @@ class Orihon::Actions::NotebookPrepareTemplate < Orihon::Actions::BaseTemplateAc
 
   # @return [Pathname]
   def src_dir
-    config.path(:zim_src_dir)
+    config.path(:notebook_dir)
   end
 
   # @return [Hash{Regexp => String}]

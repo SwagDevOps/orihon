@@ -32,7 +32,7 @@ class Orihon::Services::Info < Orihon::Services::BaseService
 
   # @return [Pathname]
   def src_dir
-    config.fetch(:zim_src_dir)
+    config.fetch(:notebook_dir)
           .to_s
           .then { Pathname.new(_1) }
           .expand_path

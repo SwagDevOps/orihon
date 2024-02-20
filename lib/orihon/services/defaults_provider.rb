@@ -9,7 +9,8 @@ class Orihon::Services::DefaultsProvider < Orihon::Services::BaseService
     {
       tasks_debug: false,
       tasks_namespace: :orihon,
-      zim_src_dir: 'notebook',
+      # directories -----------------------------------------------------------
+      notebook_dir: 'notebook',
       zim_export_dir: 'export',
       tmp_dir: 'tmp',
       # scss ------------------------------------------------------------------
