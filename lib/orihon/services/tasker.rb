@@ -18,13 +18,15 @@ class Orihon::Services::Tasker < Orihon::Services::BaseService
 
   protected
 
+  # Prepend given values with namespace, symbol are kept as-is.
+  #
   # @param [Array<Symbol, String>]
   #
   # @return [Array<Symbol>]
   def transform(values)
     values.map do |value|
       [
-        tasks_namespace,
+        value.is_a?(Symbol) ? nil : tasks_namespace,
         value,
       ].compact.map(&:to_s).join(':').to_sym
     end
