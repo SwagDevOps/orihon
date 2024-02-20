@@ -36,6 +36,20 @@ class Orihon::TaskApp
     end
   end
 
+  # Define default task.
+  #
+  # Sample of use:
+  # ```
+  # Orihon.boot(with_tasks: true, default_task: 'notebook:export')
+  # ```
+  #
+  # @param task [String, Symbol, Array<String, Symbol>]
+  def default(task)
+    [*task].then do
+      self.task(:default, _1)
+    end
+  end
+
   protected
 
   # @param mod [Module]

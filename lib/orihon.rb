@@ -18,9 +18,18 @@ class Orihon
   end
 
   class << self
+    # @param default_task [String, Symbol, nil]
+    # @param with_tasks [Boolean]
+    #
     # @return [Orihon::App]
-    def boot(config: nil, with_tasks: false)
-      App.boot(config: config, with_tasks: with_tasks)
+    def boot(config: nil, with_tasks: false, default_task: nil)
+      App.boot(config: config, with_tasks: with_tasks).tap do
+        if with_tasks and !default_task.to_s.empty? and self.const_defined?(:TaskApp)
+          self.const_get(:TaskApp).new.then do |tasker|
+            tasker.default(default_task)
+          end
+        end
+      end
     end
 
     # @return [Orihon::App]
