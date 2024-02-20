@@ -21,7 +21,7 @@ class Orihon::Services::Tasker < Orihon::Services::BaseService
   # @param [Array<Symbol, String>]
   #
   # @return [Array<Symbol>]
-  def transform(values, from: nil)
+  def transform(values)
     values.map do |value|
       [
         tasks_namespace,
