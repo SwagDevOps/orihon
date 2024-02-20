@@ -11,7 +11,7 @@ class Orihon::Services::DefaultsProvider < Orihon::Services::BaseService
       tasks_namespace: :orihon,
       # directories -----------------------------------------------------------
       notebook_dir: 'notebook',
-      zim_export_dir: 'export',
+      export_dir: 'export',
       tmp_dir: 'tmp',
       # scss ------------------------------------------------------------------
       scss_process: true,

@@ -51,7 +51,7 @@ class Orihon::Actions::NotebookPrepareTemplate < Orihon::Actions::BaseTemplateAc
 
   # @return [Pathname]
   def export_dir
-    config.path(:zim_export_dir)
+    config.path(:export_dir)
   end
 
   # @return [Pathname]
